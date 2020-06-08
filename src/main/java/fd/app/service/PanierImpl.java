@@ -14,7 +14,8 @@ public class PanierImpl implements Panier {
     @Override
     public void addItem(Product product, int quantity) {
         ProductItem productItem = items.get(product.getCode());
-        if(productItem == null){
+
+        if (productItem == null){
             ProductItem prod = new ProductItem();
             prod.setProduct(product);
             prod.setQuantity_selling(quantity);
