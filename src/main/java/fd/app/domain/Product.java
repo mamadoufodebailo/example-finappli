@@ -22,10 +22,6 @@ public class Product {
     @NotEmpty(message = "Name is required")
     private String name;
     private String description;
-    @NotNull
-    @NotEmpty(message = "Price is required")
     private double price;
-    @NotNull
-    @NotEmpty(message = "Quantity is required")
     private int quantity_remaining;
 }

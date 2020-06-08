@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.Optional;
 
@@ -18,14 +20,11 @@ public class ProductDaoTests {
     @Autowired
     private ProductRepository productRepository;
 
-    @BeforeEach
-    void setUp() {
-        entityManager.persist(new Product("PA-100", "Chargeur Dell", "Chargeur d'une machine Dell",
-                540, 3));
-    }
-
     @Test
     void test_dao() {
+        entityManager.merge(new Product("PA-100", "Chargeur Dell", "Chargeur d'une machine Dell",
+                540, 3));
+
         Optional<Product> productOptional = productRepository.findById("PA-100");
 
         assertTrue(productOptional.isPresent());

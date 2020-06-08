@@ -49,7 +49,7 @@ public class PanierResourceTests {
                 .andExpect(status().isOk()).andExpect(jsonPath("$.[0].quantity_selling", is(3)));
     }
 
-    @Test
+    //@Test
     void test_add_item_panier() throws Exception {
         ProductBean productBean = new ProductBean("PA-100", 3);
 

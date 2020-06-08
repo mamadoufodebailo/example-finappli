@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,6 +17,8 @@ class ExampleFinappliApplicationTests {
     private Product product;
     private ProductItem productItem;
     private Panier panier;
+    private AppUser user;
+    private AppRole role;
 
     @BeforeEach
     void init() {
@@ -30,12 +33,17 @@ class ExampleFinappliApplicationTests {
         product = new Product("PC-100", "HP-900", "Machine HP DualCore",
                 900, 7);
         productItem = new ProductItem(null, 2, 900, product);
+
+        role = new AppRole(null, "ADMIN");
+        user = new AppUser(null, "fode", "passer123", Arrays.asList(role));
     }
 
     @Test
     void test_entity() {
         assertNotNull(product);
         assertNotNull(productItem);
+        assertNotNull(role);
+        assertNotNull(user);
     }
 
     @Test
