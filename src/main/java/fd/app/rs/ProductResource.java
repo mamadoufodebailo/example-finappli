@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class WebResource {
+public class ProductResource {
     @Autowired
     private ProductService productService;
 
@@ -38,6 +38,5 @@ public class WebResource {
 
         return new ResponseEntity<>(productOptional.get(), HttpStatus.OK);
     }
-
 
 }

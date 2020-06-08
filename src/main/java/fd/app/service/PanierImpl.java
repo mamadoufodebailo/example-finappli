@@ -2,17 +2,19 @@ package fd.app.service;
 
 import fd.app.domain.Product;
 import fd.app.domain.ProductItem;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashMap;
 
 import java.util.Map;
 
+@Service
 public class PanierImpl implements Panier {
     private Map<String, ProductItem> items = new HashMap<>();
 
     @Override
-    public void addItem(Product product, int quantity) {
+    public ProductItem addItem(Product product, int quantity) {
         ProductItem productItem = items.get(product.getCode());
 
         if (productItem == null){
@@ -23,9 +25,11 @@ public class PanierImpl implements Panier {
 
             items.put(product.getCode(), prod);
         }
-        else{
+        else {
             productItem.setQuantity_selling(productItem.getQuantity_selling() + quantity);
         }
+
+        return productItem;
     }
 
     @Override
