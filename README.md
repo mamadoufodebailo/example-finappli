@@ -2,7 +2,7 @@
 Application Spring boot avec une couche web et des tests unitaires et integrations
 <br><br>
 Une installation simple et rapide du projet.:<br>
-<a href="https://github.com/mamadoufodebailo/">
+<a href="https://github.com/mamadoufodebailo/example-finappli.git">
 Tester une application Spring Boot RESTful APIs en utilisant MockMvc/Mockito et RestTemplate
 </a>
 
