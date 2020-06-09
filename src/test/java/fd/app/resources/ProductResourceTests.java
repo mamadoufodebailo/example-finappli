@@ -1,13 +1,23 @@
-package fd.app.rs;
+package fd.app.resources;
 
+import fd.app.business.AccountService;
 import fd.app.business.ProductService;
+import fd.app.dao.ProductRepository;
+import fd.app.dao.RoleRepository;
+import fd.app.dao.UserRepository;
 import fd.app.domain.Product;
+import fd.app.rs.ProductResource;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
@@ -19,9 +29,22 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.hamcrest.Matchers.*;
 
 @WebMvcTest(ProductResource.class)
+@ActiveProfiles("test")
+@TestPropertySource("classpath:application-test.yml")
 public class ProductResourceTests {
     @MockBean
     private ProductService productService;
+    @Qualifier("userDetailsServiceImpl")
+    @MockBean
+    private UserDetailsService userDetailsService;
+    @MockBean
+    private AccountService accountService;
+    @MockBean
+    private ProductRepository productRepository;
+    @MockBean
+    private RoleRepository roleRepository;
+    @MockBean
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private MockMvc mvc;
 

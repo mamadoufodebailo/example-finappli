@@ -4,10 +4,7 @@ import fd.app.domain.Product;
 import fd.app.domain.ProductItem;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashMap;
-
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class PanierImpl implements Panier {
@@ -17,13 +14,13 @@ public class PanierImpl implements Panier {
     public ProductItem addItem(Product product, int quantity) {
         ProductItem productItem = items.get(product.getCode());
 
-        if (productItem == null){
-            ProductItem prod = new ProductItem();
-            prod.setProduct(product);
-            prod.setQuantity_selling(quantity);
-            prod.setPrice_selling(product.getPrice());
+        if (productItem == null) {
+            productItem = new ProductItem();
+            productItem.setProduct(product);
+            productItem.setQuantity_selling(quantity);
+            productItem.setPrice_selling(product.getPrice());
 
-            items.put(product.getCode(), prod);
+            items.put(product.getCode(), productItem);
         }
         else {
             productItem.setQuantity_selling(productItem.getQuantity_selling() + quantity);
@@ -33,8 +30,8 @@ public class PanierImpl implements Panier {
     }
 
     @Override
-    public Collection<ProductItem> getItems() {
-        return items.values();
+    public List<ProductItem> getItems() {
+        return new ArrayList<>(items.values());
     }
 
     @Override

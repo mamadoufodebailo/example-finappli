@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,6 +17,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@ActiveProfiles("test")
+@TestPropertySource("classpath:application-test.yml")
 public class AccountServiceTests {
     @MockBean
     private AccountService accountService;
@@ -42,10 +46,13 @@ public class AccountServiceTests {
 
     @Test
     void test_saveUser() {
-        Mockito.when(accountService.saveUser(new AppUser(null, "fode", "bailo",null)))
-                .thenReturn(new AppUser(1L, "fode", "bailo", null));
+        Mockito.when(accountService.saveUser(new AppUser(null, "fode", "bailo",
+                Collections.singletonList(new AppRole(null, "ADMIN")))))
+                .thenReturn(new AppUser(1L, "fode", "bailo",
+                        Collections.singletonList(new AppRole(null, "ADMIN"))));
 
-        AppUser user = accountService.saveUser(new AppUser(null, "fode", "bailo", null));
+        AppUser user = accountService.saveUser(new AppUser(null, "fode", "bailo",
+                Collections.singletonList(new AppRole(null, "ADMIN"))));
         assertNotNull(user);
         assertEquals("bailo", user.getPassword());
     }
@@ -53,8 +60,8 @@ public class AccountServiceTests {
     @Test
     void test_userToRole() {
         Mockito.when(accountService.addRoleToUser("fode", "ADMIN"))
-                .thenReturn(new AppUser(1L, "fode", "bailo",
-                        Collections.singletonList(new AppRole(1L, "ADMIN"))));
+                .thenReturn(new AppUser(null, "fode", "bailo",
+                        Collections.singletonList(new AppRole(null, "ADMIN"))));
 
         AppUser user = accountService.addRoleToUser("fode", "ADMIN");
         assertNotNull(user);

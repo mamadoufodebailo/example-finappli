@@ -7,10 +7,12 @@ import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@Table(name = "PRODUCTS")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,7 +22,7 @@ public class Product {
     private String code;
     @NotNull
     @NotEmpty(message = "Name is required")
-    private String name;
+    private String label;
     private String description;
     private double price;
     private int quantity_remaining;

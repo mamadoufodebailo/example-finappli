@@ -4,6 +4,7 @@ import fd.app.dao.RoleRepository;
 import fd.app.dao.UserRepository;
 import fd.app.domain.AppRole;
 import fd.app.domain.AppUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,16 +14,12 @@ import java.util.Optional;
 @Service
 @Transactional
 public class AccountServiceImpl implements AccountService {
+    @Autowired
     private UserRepository userRepository;
+    @Autowired
     private RoleRepository roleRepository;
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    public AccountServiceImpl(UserRepository userRepository, RoleRepository roleRepository,
-                              BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
 
     @Override
     public AppUser saveUser(AppUser user) {

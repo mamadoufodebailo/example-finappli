@@ -3,13 +3,17 @@ package fd.app.rs;
 import fd.app.beans.RegisterForm;
 import fd.app.business.AccountService;
 import fd.app.domain.AppUser;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
+@CrossOrigin("*")
 @RestController
 public class UserResource {
     private AccountService accountService;
@@ -19,7 +23,7 @@ public class UserResource {
     }
 
     @PostMapping(path = "/signup", produces = MediaType.APPLICATION_JSON_VALUE)
-    public AppUser signUp(@RequestBody RegisterForm data) {
+    public ResponseEntity<AppUser> signUp(@RequestBody RegisterForm data) {
         String username = data.getUsername();
         Optional<AppUser> userOptional = accountService.findUserByUsername(username);
 
@@ -39,6 +43,6 @@ public class UserResource {
         accountService.saveUser(user);
         accountService.addRoleToUser(username, "USER");
 
-        return (user);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 }

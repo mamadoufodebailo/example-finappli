@@ -12,9 +12,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin("*")
 @RestController
 public class PanierResource {
     @Autowired
@@ -23,8 +24,8 @@ public class PanierResource {
     private ProductService productService;
 
     @GetMapping(path = "/items", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Collection<ProductItem>> getItems() {
-        Collection<ProductItem> items = panier.getItems();
+    public ResponseEntity<List<ProductItem>> getItems() {
+        List<ProductItem> items = panier.getItems();
 
         if (items.isEmpty())
             throw new NotFoundException("Le panier est vide");
@@ -32,7 +33,7 @@ public class PanierResource {
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
-    @PostMapping(path = "/items", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/items", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProductItem> addItem(@RequestBody ProductBean productBean) {
         Optional<Product> productOptional = productService.getOne(productBean.getCode());
 

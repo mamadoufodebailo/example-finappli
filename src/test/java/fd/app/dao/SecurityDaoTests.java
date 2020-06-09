@@ -1,7 +1,7 @@
 package fd.app.dao;
 
-import fd.app.domain.Product;
-import org.junit.jupiter.api.BeforeEach;
+import fd.app.domain.AppRole;
+import fd.app.domain.AppUser;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -16,20 +16,28 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @ActiveProfiles("test")
 @TestPropertySource("classpath:application-test.yml")
-public class ProductDaoTests {
+public class SecurityDaoTests {
     @Autowired
     private TestEntityManager entityManager;
     @Autowired
-    private ProductRepository productRepository;
+    private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Test
-    void test_product() {
-        entityManager.merge(new Product("PA-100", "Chargeur Dell", "Chargeur d'une machine Dell",
-                540, 3));
+    void test_user() {
+        entityManager.merge(new AppUser(null, "fode", "123", null));
 
-        Optional<Product> productOptional = productRepository.findById("PA-100");
-
-        assertTrue(productOptional.isPresent());
-        assertEquals("PA-100", productOptional.get().getCode());
+        Optional<AppUser> appUserOptional = userRepository.findByUsername("fode");
+        assertTrue(appUserOptional.isPresent());
     }
+
+    @Test
+    void test_role() {
+        entityManager.merge(new AppRole(null, "MANAGER"));
+
+        Optional<AppRole> appRoleOptional = roleRepository.findByRole("MANAGER");
+        assertTrue(appRoleOptional.isPresent());
+    }
+
 }
